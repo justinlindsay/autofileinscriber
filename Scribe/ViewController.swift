@@ -10,7 +10,7 @@ import UIKit
 import Speech
 import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, AVAudioPlayerDelegate {
 
     @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
     @IBOutlet weak var transcriptionTxtField: UITextView!
@@ -20,6 +20,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activitySpinner.isHidden = true
+        
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        
+        player.stop()
+        activitySpinner.stopAnimating()
         activitySpinner.isHidden = true
         
     }
@@ -36,6 +44,7 @@ class ViewController: UIViewController {
                         
                         let sound = try AVAudioPlayer(contentsOf: path)
                         self.audioPlayer = sound
+                        self.audioPlayer.delegate = self
                         sound.play()
                         
                     } catch {
@@ -69,13 +78,12 @@ class ViewController: UIViewController {
     
     
     @IBAction func playBtnPressed(_ sender: CircleButton) {
-        
-        activitySpinner.isHidden = false
-        activitySpinner.startAnimating()
-        requestSpeechAuth()
-        
-    }
     
+            activitySpinner.isHidden = false
+            activitySpinner.startAnimating()
+            requestSpeechAuth()
+            
+        }
 
 }
 
