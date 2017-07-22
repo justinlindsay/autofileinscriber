@@ -64,7 +64,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                             
                         } else {
                             
-                            print(result?.bestTranscription.formattedString as Any)
+                            self.transcriptionTxtField.text = result?.bestTranscription.formattedString
                             
                         }
                         
